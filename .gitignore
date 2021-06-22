@@ -1,0 +1,9 @@
+node_modules
+files
+imgs
+
+
+.env
+dev.env
+live.env
+api
