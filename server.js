@@ -27,14 +27,14 @@ let DB = process.env.DATABASE_URL.replace(
 DB = DB.replace('<dbname>', process.env.DATABASE_NAME);
 
 
-// mongoose
-//   .connect(DB, {
-//     useNewUrlParser: true,
-//     useCreateIndex: true, 
-//     useUnifiedTopology: true,
-//   })
-//   // eslint-disable-next-line no-console
-//   .then(() => console.log('DB connection successful!'));
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true, 
+    useUnifiedTopology: true,
+  })
+  // eslint-disable-next-line no-console
+  .then(() => console.log('DB connection successful!'));
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
