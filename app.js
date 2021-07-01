@@ -6,20 +6,17 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
-const fileUpload = require("express-fileupload");
 const compression = require("compression");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./app/Controllers/Error/ErrorController");
-const authRouter = require("./routes/Auth");
-const adminRouter = require("./routes/Admin");
-const UploadsRouter = require("./routes/Uploads");
+const TimeRouter = require("./routes/Time");
+
 
 const app = express();
 
 app.enable("trust proxy");
 
 app.use(cors());
-app.use(fileUpload());
 
 // 1) GLOBAL MIDDLEWARE
 // Set security HTTP headers
@@ -54,9 +51,6 @@ app.use(
   })
 );
 
-// Serving static files
-app.use(express.static(`${__dirname}/public`));
-
 app.use(compression());
 
 // Test middleware
@@ -66,10 +60,7 @@ app.use((req, res, next) => {
 });
 
 // 3) Routes
-app.use("/", authRouter);
-app.use("/api/v1", authRouter);
-app.use("/api/v1/admin", adminRouter);
-app.use("/api/v1/uploads", UploadsRouter);
+app.use("/", TimeRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
